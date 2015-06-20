@@ -1,0 +1,8 @@
+models/Table_artists_heat.class
+models/Config.class
+models/MysqlDB.class
+models/Table_ts_page_content.class
+models/Table_artists.class
+models/Table_artists_news.class
+controllers/AddArtistsNewsServlet.class
+controllers/IndexServlet.class
