@@ -98,20 +98,22 @@
 					</div>
 				</div>
 
-				<h2 class="sub-header">Section title</h2>
+				<h2 class="sub-header">熱門明星列表</h2>
 				<div class="table-responsive">
 					<table class="table table-striped">
 						<thead>
 							<tr>
 								<th>#</th>
 								<th>明星</th>
+								<th>成長曲線圖</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="name" items="${requestScope.nameList}">
+							<c:forEach var="name" items="${requestScope.nameList}" varStatus="status">
 								<tr>
-									<td>test</td>
+									<td>${status.count}</td>
 									<td>${name}</td>
+									<td><a href="/">查看</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>

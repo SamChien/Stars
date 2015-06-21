@@ -24,10 +24,10 @@ public class IndexServlet extends HttpServlet {
 		List<String> nameList = new ArrayList<String>();
 
 		try {
-			ResultSet result = mysqlDb.select( new String[] { Table_artists.NAME }, Table_artists.TABLE_NAME, false, null, Table_artists.ID);
+			ResultSet result = mysqlDb.select( new String[] { Table_artists.COL_NAME }, Table_artists.TABLE_NAME, false, null, Table_artists.COL_ID);
 
 			while (result.next()) {
-				nameList.add(result.getString(Table_artists.NAME));
+				nameList.add(result.getString(Table_artists.COL_NAME));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

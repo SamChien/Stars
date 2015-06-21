@@ -9,6 +9,7 @@
 <!-- Bootstrap -->
 <link href="./css/bootstrap.min.css" rel="stylesheet">
 <link href="./css/dashboard.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -26,10 +27,9 @@
 
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#about">About</a></li>
-					<li><a href="#contact">Contact</a></li>
-					<li><a href="#ccc">Contact</a></li>
+					<li class="active"><a href="#">首頁</a></li>
+					<li><a href="#about">開發團隊</a></li>
+					<li><a href="#contact">後台管理</a></li>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
@@ -65,68 +65,103 @@
 
 				<div class="row placeholders">
 					<div class="col-xs-6 col-sm-3 placeholder">
-						<img data-src="./holder.js/200x200/auto/sky"
-							class="img-responsive" alt="200x200"
+						<img data-src="holder.js/200x200/auto/sky" class="img-responsive"
+							alt="200x200"
 							src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzBEOEZEQiIvPjxnPjx0ZXh0IHg9Ijc0LjA1NDY4NzUiIHk9IjEwMCIgc3R5bGU9ImZpbGw6I0ZGRkZGRjtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjIwMHgyMDA8L3RleHQ+PC9nPjwvc3ZnPg=="
 							data-holder-rendered="true">
-						<h4>最受爭議十大藝人</h4>
+						<h4>最受關注藝人</h4>
 						<span class="text-muted">Something else</span>
 					</div>
 					<div class="col-xs-6 col-sm-3 placeholder">
-						<img data-src="./holder.js/200x200/auto/vine"
-							class="img-responsive" alt="200x200"
+						<img data-src="holder.js/200x200/auto/vine" class="img-responsive"
+							alt="200x200"
 							src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzM5REJBQyIvPjxnPjx0ZXh0IHg9Ijc0LjA1NDY4NzUiIHk9IjEwMCIgc3R5bGU9ImZpbGw6IzFFMjkyQztmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjIwMHgyMDA8L3RleHQ+PC9nPjwvc3ZnPg=="
 							data-holder-rendered="true">
-						<h4>熱度分析</h4>
+						<h4>最受爭議新聞</h4>
 						<span class="text-muted">Something else</span>
 					</div>
 					<div class="col-xs-6 col-sm-3 placeholder">
-						<img data-src="./holder.js/200x200/auto/sky"
-							class="img-responsive" alt="200x200"
+						<img data-src="holder.js/200x200/auto/sky" class="img-responsive"
+							alt="200x200"
 							src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzBEOEZEQiIvPjxnPjx0ZXh0IHg9Ijc0LjA1NDY4NzUiIHk9IjEwMCIgc3R5bGU9ImZpbGw6I0ZGRkZGRjtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjIwMHgyMDA8L3RleHQ+PC9nPjwvc3ZnPg=="
 							data-holder-rendered="true">
-						<h4>娛樂文章</h4>
+						<h4>藝人分析</h4>
 						<span class="text-muted">Something else</span>
 					</div>
-					<div class="col-xs-6 col-sm-3 placeholder">
-						<img data-src="./holder.js/200x200/auto/vine"
-							class="img-responsive" alt="200x200"
-							src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzM5REJBQyIvPjxnPjx0ZXh0IHg9Ijc0LjA1NDY4NzUiIHk9IjEwMCIgc3R5bGU9ImZpbGw6IzFFMjkyQztmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjIwMHgyMDA8L3RleHQ+PC9nPjwvc3ZnPg=="
-							data-holder-rendered="true">
-						<h4>明星走勢圖</h4>
-						<span class="text-muted">Something else</span>
-					</div>
+
 				</div>
 
-				<h2 class="sub-header">Section title</h2>
-				<div class="table-responsive">
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>明星</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="name" items="${requestScope.nameList}">
-								<tr>
-									<td>test</td>
-									<td>${name}</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
+				<h2 class="sub-header">藝人:周杰倫</h2>
+				<h4>熱度走勢圖</h4>
+				<div id="myfirstchart" style="height: 250px;"></div>
+				<div></div>
 				<footer class="footer">
 					<div class="container">
-						<p class="text-muted">copyright &copy 2015 陳政謙、林宜駿 知識工訪</p>
+						<p class="text-muted">copyright &copy; 2015 陳政謙、林宜駿 知識工訪</p>
 					</div>
 				</footer>
 			</div>
 		</div>
 	</div>
 
+	<div id="div_heat_data" style="display: none;">
+		<c:forEach var="artistsHeat" items="${requestScope.artistsHeatList}">
+			<div data-heat="${artistsHeat.getHeat()}" data-heat_date="${artistsHeat.getHeatDate()}"></div>
+		</c:forEach>
+	</div>
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="./js/bootstrap.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+	<script>
+		function request(getValue) { //抓取url參數
+			var url = window.location.toString();
+			var str = "";
+			var str_value = "";
+
+			if (url.indexOf("?") != -1) {
+				var ary = url.split("?")[1].split("&");
+
+				for (var i in ary) {
+					str = ary[i].split("=")[0];
+					if (str == getValue) {//取得想要得參數
+						str_value = decodeURI(ary[i].split("=")[1]);
+					}
+				}
+			}
+			return str_value;
+		}
+
+		var StarId = 's00001'; //request(StarId);
+		var dataArr = [];
+
+		$("#div_heat_data").children().each(function () {
+			var obj = {dateTime: $(this).data("heat_date"), value: $(this).data("heat")}; 
+
+			dataArr.push(obj);
+		});
+
+		new Morris.Line({
+
+			// ID of the element in which to draw the chart.
+			element : 'myfirstchart',
+			// Chart data records -- each entry in this array corresponds to a point on
+			// the chart.
+			data : dataArr,
+			// The name of the data record attribute that contains x-values.
+			xkey : 'dateTime',
+			// A list of names of data record attributes that contain y-values.
+			ykeys : [ 'value' ],
+			// Labels for the ykeys -- will be displayed when you hover over the
+			// chart.
+			labels : [ 'Value' ]
+		}).on('click', function(index, row) {
+			alert("時間:" + row.dateTime + "熱度" + row.value);
+			var dateTime = row.dateTime;
+			var hotValue = row.value;
+			location.href = 'Star_News_Summary.jsp?StarId=' + StarId + '&dateTime=' + dateTime + '&hotValue=' + hotValue + '';
+		});
+	</script>
 </body>
 </html>
