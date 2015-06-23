@@ -91,7 +91,7 @@
 
 				</div>
 
-				<h2 class="sub-header">藝人:周杰倫</h2>
+				<h2 class="sub-header">藝人:${requestScope.name}</h2>
 				<h4>熱度走勢圖</h4>
 				<div id="myfirstchart" style="height: 250px;"></div>
 				<div></div>
@@ -152,10 +152,10 @@
 			// The name of the data record attribute that contains x-values.
 			xkey : 'dateTime',
 			// A list of names of data record attributes that contain y-values.
-			ykeys : [ 'value' ],
+			ykeys : ['value'],
 			// Labels for the ykeys -- will be displayed when you hover over the
 			// chart.
-			labels : [ 'Value' ]
+			labels : ['Value']
 		}).on('click', function(index, row) {
 			alert("時間:" + row.dateTime + "熱度" + row.value);
 			var dateTime = row.dateTime;

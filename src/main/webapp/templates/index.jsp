@@ -109,11 +109,11 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="name" items="${requestScope.nameList}" varStatus="status">
+							<c:forEach var="artist" items="${requestScope.artistList}" varStatus="status">
 								<tr>
 									<td>${status.count}</td>
-									<td>${name}</td>
-									<td><a href="/">查看</a></td>
+									<td>${artist.getName()}</td>
+									<td><a href="./star_chart?id=${artist.getId()}">查看</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>

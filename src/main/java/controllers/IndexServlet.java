@@ -21,13 +21,15 @@ public class IndexServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		MysqlDB mysqlDb = new MysqlDB();
-		List<String> nameList = new ArrayList<String>();
+		List<Table_artists> artistList = new ArrayList<Table_artists>();
 
 		try {
-			ResultSet result = mysqlDb.select( new String[] { Table_artists.COL_NAME }, Table_artists.TABLE_NAME, false, null, Table_artists.COL_ID);
+			ResultSet result = mysqlDb.select( new String[] {"*"}, Table_artists.TABLE_NAME, false, null, Table_artists.COL_ID);
 
 			while (result.next()) {
-				nameList.add(result.getString(Table_artists.COL_NAME));
+				Table_artists artist = new Table_artists(result.getInt(Table_artists.COL_ID), result.getString(Table_artists.COL_NAME));
+
+				artistList.add(artist);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -35,7 +37,7 @@ public class IndexServlet extends HttpServlet {
 			mysqlDb.close();
 		}
 
-		request.setAttribute("nameList", nameList);
+		request.setAttribute("artistList", artistList);
 		request.getRequestDispatcher("/templates/index.jsp").forward(request, response);
 	}
 }
