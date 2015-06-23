@@ -14,7 +14,7 @@ import models.MysqlDB;
 import models.Table_artists;
 import models.Table_artists_heat;
 import models.Table_artists_news;
-import models.Table_month_doc_num;
+import models.Table_month_news_num;
 import models.Table_ts_page_content;
 
 @WebServlet("/add_artists_news")
@@ -38,7 +38,7 @@ public class AddArtistsNewsServlet extends HttpServlet {
 			result.next();
 			artistId = result.getInt(Table_artists.COL_ID);
 
-			result = mysqlDb.select(new String[] {"*"}, Table_ts_page_content.TABLE_NAME, false, Table_ts_page_content.COL_CONTENT + " like '%" + name + "%'", null);
+			result = mysqlDb.select(new String[] {"*"}, Table_ts_page_content.TABLE_NAME, false, Table_ts_page_content.COL_ID + " like '%N01' and " + Table_ts_page_content.COL_CONTENT + " like '%" + name + "%'", null);
 			while (result.next()) {
 				mysqlDb.insert(Table_artists_news.TABLE_NAME, new String[] {
 						Table_artists_news.COL_ID,
@@ -79,7 +79,7 @@ public class AddArtistsNewsServlet extends HttpServlet {
 				innerResult.next();
 				starNewsCount = innerResult.getInt(1);
 
-				innerResult = mysqlDb.select(new String[] {Table_month_doc_num.COL_DOC_NUM}, Table_month_doc_num.TABLE_NAME, false, "YEAR(" + Table_month_doc_num.COL_MONTH + ") = " + year + " AND MONTH(" + Table_month_doc_num.COL_MONTH + ") = " + month, null);
+				innerResult = mysqlDb.select(new String[] {Table_month_news_num.COL_DOC_NUM}, Table_month_news_num.TABLE_NAME, false, "YEAR(" + Table_month_news_num.COL_MONTH + ") = " + year + " AND MONTH(" + Table_month_news_num.COL_MONTH + ") = " + month, null);
 				innerResult.next();
 				totalNewsCount = innerResult.getInt(1);
 

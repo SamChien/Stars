@@ -1,7 +1,7 @@
 package models;
 
-public class Table_month_doc_num {
-	public static final String TABLE_NAME = "month_doc_num";
+public class Table_month_news_num {
+	public static final String TABLE_NAME = "month_news_num";
 	public static final String COL_ID = "id";
 	public static final String COL_MONTH = "month";
 	public static final String COL_DOC_NUM = "doc_num";
@@ -9,7 +9,7 @@ public class Table_month_doc_num {
 	private String month;
 	private int docNum;
 
-	public Table_month_doc_num(int id, String month, int docNum) {
+	public Table_month_news_num(int id, String month, int docNum) {
 		super();
 		this.id = id;
 		this.month = month;
