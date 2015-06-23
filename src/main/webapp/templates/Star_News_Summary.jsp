@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,8 +7,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/dashboard.css" rel="stylesheet">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/dashboard.css" rel="stylesheet">
   	</head>
   <body>
      <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -25,7 +25,7 @@
         
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">首頁</a></li>
+            <li class="active"><a href="./index">首頁</a></li>
             <li><a href="#about">開發團隊</a></li>
             <li><a href="#contact">後台管理</a></li>      
           </ul>
@@ -58,13 +58,35 @@
 				</ul>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<h1 class="page-header">爭議新聞摘要</h1>
-				<h2 class="sub-header">藝人:周杰倫</h2>
-				<!-- Marketing Icons Section -->
-				<div id="news_summary_list" class="row">
+				<c:catch var="dateTime" >
+				<h1 class="page-header">時間點:
+					${dateTime}
+				</h1>
+				</c:catch>
 				
-					
-					
+				
+				<c:catch var="artist_Name" >
+						<h2 class="sub-header">藝人:${artist_Name}</h2>
+				</c:catch>
+				<!-- Marketing Icons Section -->
+				<div id="news_summary_list">
+					<c:forEach var="artistsNewsList" items="${requestScope.artistsNewsList}" varStatus="status" >
+						<div class="col-md-6">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 >${artistsNewsList.getTitle()}</h4>
+									<p>${artistsNewsList.getPostTime()}</p>
+								</div>
+								<div class="panel-body">
+									<p id="${status.count}" class="collapse">${artistsNewsList.getContent()}</p>								
+									<button type="button" data-toggle="collapse"
+										data-target="#${status.count}" class="btn btn-default">Read</button>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+
+
 				</div>
 				<!-- /.row -->
 				<footer class="footer">
@@ -81,7 +103,7 @@
 
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="../js/bootstrap.js"></script>
+    <script src="./js/bootstrap.js"></script>
 	<script>
 		function request(getValue) {//抓取url參數
 			var url = window.location.toString();
@@ -101,30 +123,10 @@
 		}
 
 		jQuery(document).ready(function() {
-			/* alert(request("StarId"));
-			alert(request("hotValue"));
-			alert(request("dateTime")); */
-			showNewsSummary();
+			
 		});
 		
-		function showNewsSummary() {
-			for (var index = 0; index < 9; index++) {
-				$('#news_summary_list')
-						.append(
-								'<div class="col-md-4">'
-										+ '<div class="panel panel-default">'
-										+ '<div class="panel-heading">'
-										+ '<h4><i class="fa fa-fw fa-check"></i>News_title</h4>'
-										+ '</div>'
-										+ '<div class="panel-body">'
-										+ '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
-										+ 'Itaque, optio corporis quae nulla aspernatur in alias at'
-										+ 'numquam rerum ea excepturi expedita tenetur assumenda'
-										+ 'voluptatibus eveniet incidunt dicta nostrum quod?</p>'
-										+ '<a href="#" class="btn btn-default">Read More</a>'
-										+ '</div>' + '</div>' + '</div>');
-			}
-		}
+		
 	</script>
 
 

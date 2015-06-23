@@ -3,6 +3,7 @@ package controllers;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,8 @@ public class StarChartServlet extends HttpServlet {
 			ResultSet result = mysqlDb.select(cols, artistsHeatLeftJoinArtists, false, where, orderBy);
 
 			while (result.next()) {
-				Table_artists_heat artistsHeat = new Table_artists_heat(0, result.getDouble(Table_artists_heat.COL_HEAT), result.getString(Table_artists_heat.COL_HEAT_DATE), 0);
+				String date = new SimpleDateFormat("yyyy-MM").format(result.getDate(Table_artists_heat.COL_HEAT_DATE));
+				Table_artists_heat artistsHeat = new Table_artists_heat(0, result.getDouble(Table_artists_heat.COL_HEAT), date, 0);
 
 				name = result.getString(Table_artists.COL_NAME);
 				artistsHeatList.add(artistsHeat);
@@ -45,6 +47,7 @@ public class StarChartServlet extends HttpServlet {
 			mysqlDb.close();
 		}
 
+		request.setAttribute("id", id);
 		request.setAttribute("name", name);
 		request.setAttribute("artistsHeatList", artistsHeatList);
 		request.getRequestDispatcher("/templates/star_chart.jsp").forward(request, response);
