@@ -84,7 +84,7 @@ public class AddArtistsNewsServlet extends HttpServlet {
 				totalNewsCount = innerResult.getInt(1);
 
 				heat = starNewsCount / (double) totalNewsCount;
-				mysqlDb.insert(Table_artists_heat.TABLE_NAME, new String[] {Table_artists_heat.COL_HEAT, Table_artists_heat.COL_HEAT_DATE, Table_artists_heat.COL_ARTIST_ID}, new Object[] {heat, year + "-" + month + "-00", artistId}, true);
+				mysqlDb.insert(Table_artists_heat.TABLE_NAME, new String[] {Table_artists_heat.COL_HEAT, Table_artists_heat.COL_HEAT_DATE, Table_artists_heat.COL_ARTIST_ID}, new Object[] {heat, year + "-" + month + "-01", artistId}, true);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
