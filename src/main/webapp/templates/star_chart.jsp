@@ -69,7 +69,11 @@
 				
 				<h4>熱度走勢圖</h4>
 				<div id="myfirstchart" style="height: 250px;"></div>
-				<div></div>
+				<h4>正評走勢圖</h4>
+				<div id="mysecondchart" style="height: 250px;"></div>
+				<h4>負評走勢圖</h4>
+				<div id="mythirdchart" style="height: 250px;"></div>
+				
 				<footer class="footer">
 					<div class="container">
 						<p class="text-muted">copyright &copy; 2015 陳政謙、林宜駿 知識工訪</p>
@@ -97,7 +101,7 @@
 			var obj = {dateTime: $(this).data("heat_date"), value: $(this).data("heat")}; 
 			dataArr.push(obj);
 		});
-
+		//藝人熱度折線圖
 		new Morris.Line({
 			// ID of the element in which to draw the chart.
 			element : 'myfirstchart',
@@ -110,14 +114,39 @@
 			ykeys : ['value'],
 			// Labels for the ykeys -- will be displayed when you hover over the
 			// chart.
-			labels : ['Value']
+			labels : ['HeatValue'],
+			lineColors: ['#A00200'],
+		    pointFillColors: ['#A00200']
 		}).on('click', function(index, row) {
 			var artist_id = $("#div_star_data").data("id");
 			var artist_Name = $("#div_star_data").data("name");
 			var dateTime = row.dateTime;
 			var hotValue = row.value;
-
 			location.href = './StarNewsSummaryServlet?artist_id=' + artist_id + '&dateTime=' + dateTime + '&artist_Name=' + artist_Name;
+		});
+		//正面評語折線圖
+		new Morris.Line({
+			element : 'mysecondchart',	
+			data : dataArr,
+			xkey : 'dateTime',			
+			ykeys : ['value'],		
+			labels : ['PositiveValue'],
+			lineColors: ['#EAC100'],
+		    pointFillColors: ['#EAC100']
+		}).on('click', function(index, row) {
+			
+		});
+		//負面評語折線圖
+		new Morris.Line({
+			element : 'mythirdchart',	
+			data : dataArr,
+			xkey : 'dateTime',			
+			ykeys : ['value'],		
+			labels: ['NegativeValue'],
+			lineColors: ['#6C6C6C'],
+		    pointFillColors: ['#6C6C6C']
+		}).on('click', function(index, row) {
+	
 		});
 	</script>
 </body>
