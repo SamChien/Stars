@@ -26,11 +26,14 @@ public class Table_artists_news {
 	private double positiveScore;
 	private double negativeScore;
 	private int artistId;
+	private String summary;
+
+	
 
 	public Table_artists_news(String id, String sName, String sAreaName,
 			String title, String author, String pageUrl, String postTime,
 			String content, int commentCount, double positiveScore,
-			double negativeScore, int artistId) {
+			double negativeScore, int artistId, String summary) {
 		super();
 		this.id = id;
 		this.sName = sName;
@@ -44,6 +47,15 @@ public class Table_artists_news {
 		this.positiveScore = positiveScore;
 		this.negativeScore = negativeScore;
 		this.artistId = artistId;
+		this.summary = summary;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
 	}
 
 	public String getId() {

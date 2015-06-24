@@ -89,16 +89,36 @@
 									<h4 >${artistsNewsList.getTitle()}</h4>
 									<p>${artistsNewsList.getPostTime()}</p>
 								</div>
-								<div class="panel-body">
-									<p id="${status.count}" class="collapse">${artistsNewsList.getContent()}</p>								
-									<button type="button" data-toggle="collapse" data-target="#${status.count}" class="btn btn-default">Read</button>
+								<div class="panel-body">															
+									<p>${artistsNewsList.getSummary()}</p>														
+									<button type="button" class="btn btn-default" data-toggle="modal" data-target="#${status.count}">全文閱覽</button>
+								</div>
+							</div>
+						</div>
+						<!-- Modal -->
+						<div class="modal fade" id="${status.count}" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<h4 class="modal-title" id="myModalLabel">${artistsNewsList.getTitle()}</h4>
+										<h5>${artistsNewsList.getsName()} ${artistsNewsList.getsAreaName()}</h5>
+									</div>
+									<div class="modal-body">${artistsNewsList.getContent()}</div>
+									<div class="modal-footer">				
+										<button type="button" class="btn btn-primary"
+											data-dismiss="modal">Close</button>										
+									</div>
 								</div>
 							</div>
 						</div>
 					</c:forEach>
-
-
 				</div>
+				
 				<!-- /.row -->
 				<footer class="footer">
 					<div class="container">

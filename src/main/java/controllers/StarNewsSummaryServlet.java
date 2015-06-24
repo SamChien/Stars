@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.MysqlDB;
+import models.Summary;
 import models.Table_artists;
 import models.Table_artists_news;
 import models.Table_keywords;
@@ -54,8 +57,12 @@ public class StarNewsSummaryServlet extends HttpServlet {
 			where = Table_artists_news.COL_ARTIST_ID + " = " + artistId + " AND YEAR(" + Table_artists_news.COL_POST_TIME + ") = " + year + " AND MONTH(" + Table_artists_news.COL_POST_TIME + ") = " + month;
 			orderBy = Table_artists_news.COL_POST_TIME;
 			result = mysqlDb.select(cols, table, false, where, orderBy);
-
-			while (result.next()) {
+			
+			
+			
+			while (result.next()) {			
+						
+				String summary=new Summary().getSummary(result.getString(Table_artists_news.COL_CONTENT),keywordsList,4);
 				Table_artists_news artistsNews = new Table_artists_news(null,
 						result.getString(Table_artists_news.COL_S_NAME),
 						result.getString(Table_artists_news.COL_S_AREA_NAME),
@@ -67,7 +74,8 @@ public class StarNewsSummaryServlet extends HttpServlet {
 						result.getInt(Table_artists_news.COL_COMMENT_COUNT),
 						result.getDouble(Table_artists_news.COL_POSITIVE_SCORE),
 						result.getDouble(Table_artists_news.COL_NEGATIVE_SCORE),
-						result.getInt(Table_artists_news.COL_ARTIST_ID));
+						result.getInt(Table_artists_news.COL_ARTIST_ID),
+						summary);
 
 				name = result.getString(Table_artists.COL_NAME);
 				artistsNewsList.add(artistsNews);
