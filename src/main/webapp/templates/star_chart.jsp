@@ -86,7 +86,7 @@
 	<div id="div_star_data" style="display: none;" data-id="${requestScope.id}" data-name="${requestScope.name}"></div>
 	<div id="div_heat_data" style="display: none;">
 		<c:forEach var="artistsHeat" items="${requestScope.artistsHeatList}">
-			<div data-heat="${artistsHeat.getHeat()}" data-heat_date="${artistsHeat.getHeatDate()}"></div>
+			<div data-id="${artistsHeat.getId()}" data-heat="${artistsHeat.getHeat()}" data-heat_date="${artistsHeat.getHeatDate()}"></div>
 		</c:forEach>
 	</div>
 
@@ -98,7 +98,7 @@
 		var dataArr = [];
 
 		$("#div_heat_data").children().each(function () {
-			var obj = {dateTime: $(this).data("heat_date"), value: $(this).data("heat")}; 
+			var obj = {dateTime: $(this).data("heat_date"), value: $(this).data("heat"), heatId: $(this).data("id")}; 
 			dataArr.push(obj);
 		});
 		//藝人熱度折線圖
@@ -117,12 +117,12 @@
 			labels : ['HeatValue'],
 			lineColors: ['#A00200'],
 		    pointFillColors: ['#A00200']
-		}).on('click', function(index, row) {
+		}).on("click", function(index, row) {
 			var artist_id = $("#div_star_data").data("id");
-			var artist_Name = $("#div_star_data").data("name");
 			var dateTime = row.dateTime;
-			var hotValue = row.value;
-			location.href = './StarNewsSummaryServlet?artist_id=' + artist_id + '&dateTime=' + dateTime + '&artist_Name=' + artist_Name;
+			var heatId = row.heatId;
+
+			location.href = "./StarNewsSummaryServlet?artist_id=" + artist_id + "&date_time=" + dateTime + "&heat_id=" + heatId;
 		});
 		//正面評語折線圖
 		new Morris.Line({

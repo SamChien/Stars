@@ -69,6 +69,18 @@
 						<h2 class="sub-header">藝人:${artist_Name}</h2>
 				</c:catch>
 				<!-- Marketing Icons Section -->
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4>熱門關鍵字</h4>
+						</div>
+						<div class="panel-body">
+							<c:forEach var="keyword" items="${requestScope.keywordsList}">
+								<button style="margin-bottom: 30px;" type="button" class="btn btn-danger">${keyword}</button>
+							</c:forEach>
+						</div>
+					</div>
+				</div>
 				<div id="news_summary_list">
 					<c:forEach var="artistsNewsList" items="${requestScope.artistsNewsList}" varStatus="status" >
 						<div class="col-md-6">
@@ -79,8 +91,7 @@
 								</div>
 								<div class="panel-body">
 									<p id="${status.count}" class="collapse">${artistsNewsList.getContent()}</p>								
-									<button type="button" data-toggle="collapse"
-										data-target="#${status.count}" class="btn btn-default">Read</button>
+									<button type="button" data-toggle="collapse" data-target="#${status.count}" class="btn btn-default">Read</button>
 								</div>
 							</div>
 						</div>

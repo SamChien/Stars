@@ -13,34 +13,50 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.MysqlDB;
+import models.Table_artists;
 import models.Table_artists_news;
+import models.Table_keywords;
 
 @WebServlet("/StarNewsSummaryServlet")
 public class StarNewsSummaryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int artist_id = Integer.parseInt(request.getParameter("artist_id")) ;
-		String dateTime = request.getParameter("dateTime");
-		String artist_Name = request.getParameter("artist_Name");
+		String artistId = request.getParameter("artist_id");
+		String heatId = request.getParameter("heat_id");
+		String dateTime = request.getParameter("date_time");
+		String[] dateTimeArr = dateTime.split("-");
+		String year = dateTimeArr[0];
+		String month = dateTimeArr[1];
+		String name = null;
 		MysqlDB mysqlDb = new MysqlDB();
-		
+		List<String> keywordsList = new ArrayList<String>();
 		List<Table_artists_news> artistsNewsList = new ArrayList<Table_artists_news>();
 	
 		try {
-			ResultSet result = mysqlDb
-					.select(new String[] { "*" },
-							Table_artists_news.TABLE_NAME, false,
-							Table_artists_news.COL_ARTIST_ID + " = " + artist_id
-									+ " AND "
-									+ Table_artists_news.COL_POST_TIME
-									+ " LIKE '" + dateTime + "%'",
-							Table_artists_news.COL_POST_TIME);
+			String[] cols;
+			String table;
+			String where;
+			String orderBy;
+			ResultSet result;
+
+			cols = new String[] {"*"};
+			table = Table_keywords.TABLE_NAME;
+			where = Table_keywords.COL_HEAT_ID + " = " + heatId;
+			orderBy = Table_keywords.COL_TF_IDF;
+			result = mysqlDb.select(cols, table, false, where, orderBy);
+			while (result.next()) {
+				keywordsList.add(result.getString(Table_keywords.COL_WORD));
+			}
+
+			cols = new String[] {"*"};
+			table = Table_artists_news.TABLE_NAME + " an LEFT JOIN " + Table_artists.TABLE_NAME + " a ON an." + Table_artists_news.COL_ARTIST_ID + " = a." + Table_artists.COL_ID;
+			where = Table_artists_news.COL_ARTIST_ID + " = " + artistId + " AND YEAR(" + Table_artists_news.COL_POST_TIME + ") = " + year + " AND MONTH(" + Table_artists_news.COL_POST_TIME + ") = " + month;
+			orderBy = Table_artists_news.COL_POST_TIME;
+			result = mysqlDb.select(cols, table, false, where, orderBy);
 
 			while (result.next()) {
-				Table_artists_news artistsNews = new Table_artists_news(
-						result.getString(Table_artists_news.COL_ID),
+				Table_artists_news artistsNews = new Table_artists_news(null,
 						result.getString(Table_artists_news.COL_S_NAME),
 						result.getString(Table_artists_news.COL_S_AREA_NAME),
 						result.getString(Table_artists_news.COL_TITLE),
@@ -53,6 +69,7 @@ public class StarNewsSummaryServlet extends HttpServlet {
 						result.getDouble(Table_artists_news.COL_NEGATIVE_SCORE),
 						result.getInt(Table_artists_news.COL_ARTIST_ID));
 
+				name = result.getString(Table_artists.COL_NAME);
 				artistsNewsList.add(artistsNews);
 			}
 		} catch (SQLException e) {
@@ -62,7 +79,8 @@ public class StarNewsSummaryServlet extends HttpServlet {
 		}
 
 		request.setAttribute("artistsNewsList", artistsNewsList);
-		request.setAttribute("artist_Name", artist_Name);
+		request.setAttribute("keywordsList", keywordsList);
+		request.setAttribute("artist_Name", name);
 		request.setAttribute("dateTime", dateTime);		
 		request.getRequestDispatcher("/templates/Star_News_Summary.jsp").forward(request, response);
 	}
