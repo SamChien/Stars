@@ -1,7 +1,7 @@
 package models;
 
-public class Table_artists_news {
-	public static final String TABLE_NAME = "artists_news";
+public class Table_artists_news_comments {
+	public static final String TABLE_NAME = "artists_news_comments";
 	public static final String COL_ID = "id";
 	public static final String COL_S_NAME = "s_name";
 	public static final String COL_S_AREA_NAME = "s_area_name";
@@ -13,7 +13,10 @@ public class Table_artists_news {
 	public static final String COL_COMMENT_COUNT = "comment_count";
 	public static final String COL_POSITIVE_SCORE = "positive_score";
 	public static final String COL_NEGATIVE_SCORE = "negative_score";
+	public static final String COL_TYPE = "type";
 	public static final String COL_ARTIST_ID = "artist_id";
+	public static final int TYPE_NEWS = 0;
+	public static final int TYPE_COMMENTS = 1;
 	private String id;
 	private String sName;
 	private String sAreaName;
@@ -25,15 +28,14 @@ public class Table_artists_news {
 	private int commentCount;
 	private double positiveScore;
 	private double negativeScore;
+	private int type;
 	private int artistId;
 	private String summary;
 
-	
-
-	public Table_artists_news(String id, String sName, String sAreaName,
-			String title, String author, String pageUrl, String postTime,
-			String content, int commentCount, double positiveScore,
-			double negativeScore, int artistId, String summary) {
+	public Table_artists_news_comments(
+			String id, String sName, String sAreaName, String title, String author,
+			String pageUrl, String postTime, String content, int commentCount, double positiveScore,
+			double negativeScore, int type, int artistId, String summary) {
 		super();
 		this.id = id;
 		this.sName = sName;
@@ -46,15 +48,8 @@ public class Table_artists_news {
 		this.commentCount = commentCount;
 		this.positiveScore = positiveScore;
 		this.negativeScore = negativeScore;
+		this.type = type;
 		this.artistId = artistId;
-		this.summary = summary;
-	}
-
-	public String getSummary() {
-		return summary;
-	}
-
-	public void setSummary(String summary) {
 		this.summary = summary;
 	}
 
@@ -146,11 +141,27 @@ public class Table_artists_news {
 		this.negativeScore = negativeScore;
 	}
 
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
 	public int getArtistId() {
 		return artistId;
 	}
 
 	public void setArtistId(int artistId) {
 		this.artistId = artistId;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
 	}
 }

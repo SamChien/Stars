@@ -85,8 +85,18 @@
 
 	<div id="div_star_data" style="display: none;" data-id="${requestScope.id}" data-name="${requestScope.name}"></div>
 	<div id="div_heat_data" style="display: none;">
-		<c:forEach var="artistsHeat" items="${requestScope.artistsHeatList}">
-			<div data-id="${artistsHeat.getId()}" data-heat="${artistsHeat.getHeat()}" data-heat_date="${artistsHeat.getHeatDate()}"></div>
+		<c:forEach var="artistsMonScore" items="${requestScope.artistsHeatList}">
+			<div data-id="${artistsMonScore.getId()}" data-heat="${artistsMonScore.getScore()}" data-heat_date="${artistsMonScore.getScoreDate()}"></div>
+		</c:forEach>
+	</div>
+	<div id="div_pos_data" style="display: none;">
+		<c:forEach var="artistsMonScore" items="${requestScope.artistsPosScoreList}">
+			<div data-id="${artistsMonScore.getId()}" data-heat="${artistsMonScore.getScore()}" data-heat_date="${artistsMonScore.getScoreDate()}"></div>
+		</c:forEach>
+	</div>
+	<div id="div_neg_data" style="display: none;">
+		<c:forEach var="artistsMonScore" items="${requestScope.artistsNegScoreList}">
+			<div data-id="${artistsMonScore.getId()}" data-heat="${artistsMonScore.getScore()}" data-heat_date="${artistsMonScore.getScoreDate()}"></div>
 		</c:forEach>
 	</div>
 
@@ -95,11 +105,26 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 	<script>
-		var dataArr = [];
+		var heatDataArr = [];
+		var posDataArr = [];
+		var negDataArr = [];
 
 		$("#div_heat_data").children().each(function () {
 			var obj = {dateTime: $(this).data("heat_date"), value: $(this).data("heat"), heatId: $(this).data("id")}; 
-			dataArr.push(obj);
+
+			heatDataArr.push(obj);
+		});
+
+		$("#div_pos_data").children().each(function () {
+			var obj = {dateTime: $(this).data("heat_date"), value: $(this).data("heat"), heatId: $(this).data("id")}; 
+
+			posDataArr.push(obj);
+		});
+
+		$("#div_neg_data").children().each(function () {
+			var obj = {dateTime: $(this).data("heat_date"), value: $(this).data("heat"), heatId: $(this).data("id")}; 
+
+			negDataArr.push(obj);
 		});
 		//藝人熱度折線圖
 		new Morris.Line({
@@ -107,7 +132,7 @@
 			element : 'myfirstchart',
 			// Chart data records -- each entry in this array corresponds to a point on
 			// the chart.
-			data : dataArr,
+			data : heatDataArr,
 			// The name of the data record attribute that contains x-values.
 			xkey : 'dateTime',
 			// A list of names of data record attributes that contain y-values.
@@ -127,7 +152,7 @@
 		//正面評語折線圖
 		new Morris.Line({
 			element : 'mysecondchart',	
-			data : dataArr,
+			data : posDataArr,
 			xkey : 'dateTime',			
 			ykeys : ['value'],		
 			labels : ['PositiveValue'],
@@ -139,7 +164,7 @@
 		//負面評語折線圖
 		new Morris.Line({
 			element : 'mythirdchart',	
-			data : dataArr,
+			data : negDataArr,
 			xkey : 'dateTime',			
 			ykeys : ['value'],		
 			labels: ['NegativeValue'],

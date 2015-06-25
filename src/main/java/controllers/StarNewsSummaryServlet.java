@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import models.MysqlDB;
 import models.Summary;
 import models.Table_artists;
-import models.Table_artists_news;
+import models.Table_artists_news_comments;
 import models.Table_keywords;
 
 @WebServlet("/StarNewsSummaryServlet")
@@ -34,7 +32,7 @@ public class StarNewsSummaryServlet extends HttpServlet {
 		String name = null;
 		MysqlDB mysqlDb = new MysqlDB();
 		List<String> keywordsList = new ArrayList<String>();
-		List<Table_artists_news> artistsNewsList = new ArrayList<Table_artists_news>();
+		List<Table_artists_news_comments> artistsNewsList = new ArrayList<Table_artists_news_comments>();
 	
 		try {
 			String[] cols;
@@ -53,28 +51,29 @@ public class StarNewsSummaryServlet extends HttpServlet {
 			}
 
 			cols = new String[] {"*"};
-			table = Table_artists_news.TABLE_NAME + " an LEFT JOIN " + Table_artists.TABLE_NAME + " a ON an." + Table_artists_news.COL_ARTIST_ID + " = a." + Table_artists.COL_ID;
-			where = Table_artists_news.COL_ARTIST_ID + " = " + artistId + " AND YEAR(" + Table_artists_news.COL_POST_TIME + ") = " + year + " AND MONTH(" + Table_artists_news.COL_POST_TIME + ") = " + month;
-			orderBy = Table_artists_news.COL_POST_TIME;
+			table = Table_artists_news_comments.TABLE_NAME + " an LEFT JOIN " + Table_artists.TABLE_NAME + " a ON an." + Table_artists_news_comments.COL_ARTIST_ID + " = a." + Table_artists.COL_ID;
+			where = Table_artists_news_comments.COL_ARTIST_ID + " = " + artistId + " AND YEAR(" + Table_artists_news_comments.COL_POST_TIME + ") = " + year + " AND MONTH(" + Table_artists_news_comments.COL_POST_TIME + ") = " + month;
+			orderBy = Table_artists_news_comments.COL_POST_TIME;
 			result = mysqlDb.select(cols, table, false, where, orderBy);
 			
 			
 			
 			while (result.next()) {			
 						
-				String summary=new Summary().getSummary(result.getString(Table_artists_news.COL_CONTENT),keywordsList,4);
-				Table_artists_news artistsNews = new Table_artists_news(null,
-						result.getString(Table_artists_news.COL_S_NAME),
-						result.getString(Table_artists_news.COL_S_AREA_NAME),
-						result.getString(Table_artists_news.COL_TITLE),
-						result.getString(Table_artists_news.COL_AUTHOR),
-						result.getString(Table_artists_news.COL_PAGE_URL),
-						result.getString(Table_artists_news.COL_POST_TIME),
-						result.getString(Table_artists_news.COL_CONTENT),
-						result.getInt(Table_artists_news.COL_COMMENT_COUNT),
-						result.getDouble(Table_artists_news.COL_POSITIVE_SCORE),
-						result.getDouble(Table_artists_news.COL_NEGATIVE_SCORE),
-						result.getInt(Table_artists_news.COL_ARTIST_ID),
+				String summary=new Summary().getSummary(result.getString(Table_artists_news_comments.COL_CONTENT),keywordsList,4);
+				Table_artists_news_comments artistsNews = new Table_artists_news_comments(null,
+						result.getString(Table_artists_news_comments.COL_S_NAME),
+						result.getString(Table_artists_news_comments.COL_S_AREA_NAME),
+						result.getString(Table_artists_news_comments.COL_TITLE),
+						result.getString(Table_artists_news_comments.COL_AUTHOR),
+						result.getString(Table_artists_news_comments.COL_PAGE_URL),
+						result.getString(Table_artists_news_comments.COL_POST_TIME),
+						result.getString(Table_artists_news_comments.COL_CONTENT),
+						result.getInt(Table_artists_news_comments.COL_COMMENT_COUNT),
+						result.getDouble(Table_artists_news_comments.COL_POSITIVE_SCORE),
+						result.getDouble(Table_artists_news_comments.COL_NEGATIVE_SCORE),
+						Table_artists_news_comments.TYPE_NEWS,
+						result.getInt(Table_artists_news_comments.COL_ARTIST_ID),
 						summary);
 
 				name = result.getString(Table_artists.COL_NAME);

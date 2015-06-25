@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import models.MysqlDB;
 import models.Table_artists;
-import models.Table_artists_heat;
+import models.Table_artists_month_score;
 
 @WebServlet("/star_chart")
 public class StarChartServlet extends HttpServlet {
@@ -25,21 +25,38 @@ public class StarChartServlet extends HttpServlet {
 		String id = request.getParameter("id");
 		MysqlDB mysqlDb = new MysqlDB();
 		String name = null;
-		List<Table_artists_heat> artistsHeatList = new ArrayList<Table_artists_heat>();
+		List<Table_artists_month_score> artistsHeatList = new ArrayList<Table_artists_month_score>();
+		List<Table_artists_month_score> artistsPosScoreList = new ArrayList<Table_artists_month_score>();
+		List<Table_artists_month_score> artistsNegScoreList = new ArrayList<Table_artists_month_score>();
 
 		try {
-			String[] cols = {"ah." + Table_artists_heat.COL_ID + " AS heat_id", Table_artists.COL_NAME, Table_artists_heat.COL_HEAT_DATE, Table_artists_heat.COL_HEAT};
-			String artistsHeatLeftJoinArtists = Table_artists_heat.TABLE_NAME + " AS ah LEFT JOIN " + Table_artists.TABLE_NAME + " AS a ON ah." + Table_artists_heat.COL_ARTIST_ID + " = a." + Table_artists.COL_ID;
-			String where = Table_artists_heat.COL_ARTIST_ID + " = " + id;
-			String orderBy = Table_artists_heat.COL_HEAT_DATE;
-			ResultSet result = mysqlDb.select(cols, artistsHeatLeftJoinArtists, false, where, orderBy);
+			String[] cols = {
+					"ams." + Table_artists_month_score.COL_ID + " AS ams_id",
+					Table_artists.COL_NAME,
+					Table_artists_month_score.COL_SCORE_DATE,
+					Table_artists_month_score.COL_SCORE,
+					Table_artists_month_score.COL_TYPE};
+			String table =
+					Table_artists_month_score.TABLE_NAME + " AS ams" +
+					" LEFT JOIN " + Table_artists.TABLE_NAME + " AS a" +
+					" ON ams." + Table_artists_month_score.COL_ARTIST_ID + " = a." + Table_artists.COL_ID;
+			String where = Table_artists_month_score.COL_ARTIST_ID + " = " + id;
+			String orderBy = Table_artists_month_score.COL_SCORE_DATE;
+			ResultSet result = mysqlDb.select(cols, table, false, where, orderBy);
 
 			while (result.next()) {
-				String date = new SimpleDateFormat("yyyy-MM").format(result.getDate(Table_artists_heat.COL_HEAT_DATE));
-				Table_artists_heat artistsHeat = new Table_artists_heat(result.getInt("heat_id"), result.getDouble(Table_artists_heat.COL_HEAT), date, 0);
+				int type = result.getInt(Table_artists_month_score.COL_TYPE);
+				String date = new SimpleDateFormat("yyyy-MM").format(result.getDate(Table_artists_month_score.COL_SCORE_DATE));
+				Table_artists_month_score artistsMonScore = new Table_artists_month_score(result.getInt("ams_id"), result.getDouble(Table_artists_month_score.COL_SCORE), date, 0, 0);
 
 				name = result.getString(Table_artists.COL_NAME);
-				artistsHeatList.add(artistsHeat);
+				if (type == Table_artists_month_score.TYPE_HEAT) {
+					artistsHeatList.add(artistsMonScore);
+				} else if (type == Table_artists_month_score.TYPE_POSITIVE) {
+					artistsPosScoreList.add(artistsMonScore);
+				} else if (type == Table_artists_month_score.TYPE_NEGATIVE) {
+					artistsNegScoreList.add(artistsMonScore);
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -50,6 +67,8 @@ public class StarChartServlet extends HttpServlet {
 		request.setAttribute("id", id);
 		request.setAttribute("name", name);
 		request.setAttribute("artistsHeatList", artistsHeatList);
+		request.setAttribute("artistsPosScoreList", artistsPosScoreList);
+		request.setAttribute("artistsNegScoreList", artistsNegScoreList);
 		request.getRequestDispatcher("/templates/star_chart.jsp").forward(request, response);
 	}
 }
