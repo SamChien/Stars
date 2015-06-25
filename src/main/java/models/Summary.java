@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-
 class SentenceCompPosition implements Comparator<Sentence> {
 	@Override
 	public int compare(Sentence sentence1, Sentence sentence2) {
@@ -40,22 +39,21 @@ class Sentence {
 }
 
 public class Summary {
-	List<Sentence> sentencesArrayList = new ArrayList<Sentence>();//¥þ³¡sentences
-	List<Sentence> SpecifiedSentencesArrayList = new ArrayList<Sentence>();//Åv­«°ªªºSentences
+	List<Sentence> sentencesArrayList = new ArrayList<Sentence>();
+	List<Sentence> SpecifiedSentencesArrayList = new ArrayList<Sentence>();
 
 	public String getSummary(String DocContent, List<String> keywords, int SentenceLength) {
 		String summary = null;
 		
 		DocContent = DocContent.replaceAll("[a-zA-Z]","");
 		
-		DocContent = DocContent.replaceAll("¡A", ":");
-		DocContent = DocContent.replaceAll("¡C", ":");
+		DocContent = DocContent.replaceAll("ã€‚", ":");
+		DocContent = DocContent.replaceAll("ï¼Œ", ":");
 		DocContent = DocContent.replaceAll(",", ":");
 		
 		
 		String[] sss = DocContent.split(":");
 
-		// ±N¨C­Ó¥y¤l©ñ¤JsentencesArrayList
 		for (int i = 0; i < sss.length; i++) {
 			Sentence sentence = new Sentence();
 			sentence.sentenceContent = sss[i];
@@ -70,7 +68,7 @@ public class Summary {
 				}
 			}
 		}
-		Collections.sort(sentencesArrayList, new SentenceCompWeight().reversed());// Weight±Æ§Ç¥Ñ¤j¨ì¤p
+		Collections.sort(sentencesArrayList, new SentenceCompWeight().reversed());
 		if (sentencesArrayList.size() >= SentenceLength) {
 			for (int index = 0; index < SentenceLength; index++) {
 				SpecifiedSentencesArrayList.add(sentencesArrayList.get(index));
@@ -80,7 +78,7 @@ public class Summary {
 				SpecifiedSentencesArrayList.add(s);
 			}		
 		}
-		Collections.sort(SpecifiedSentencesArrayList, new SentenceCompPosition());// Position±Æ§Ç¥Ñ¤p¨ì¤j
+		Collections.sort(SpecifiedSentencesArrayList, new SentenceCompPosition());
 		StringBuilder sb = new StringBuilder();
 		if (sentencesArrayList.size() >= SentenceLength) {
 			for (int index = 0; index < SentenceLength; index++) {
@@ -88,7 +86,7 @@ public class Summary {
 				if(index==SentenceLength-1){
 					sb.append(st.sentenceContent).append("...");		
 				}else{
-					sb.append(st.sentenceContent).append("¡A");
+					sb.append(st.sentenceContent).append("ï¼Œ");
 				}
 			}
 		}else{
@@ -96,7 +94,7 @@ public class Summary {
 				if(SpecifiedSentencesArrayList.indexOf(st)==SpecifiedSentencesArrayList.size()-1){
 					sb.append(st.sentenceContent).append("...");		
 				}else{
-					sb.append(st.sentenceContent).append("¡A");
+					sb.append(st.sentenceContent).append("ï¼Œ");
 				}
 			}
 		}

@@ -47,7 +47,12 @@ public class StarChartServlet extends HttpServlet {
 			while (result.next()) {
 				int type = result.getInt(Table_artists_month_score.COL_TYPE);
 				String date = new SimpleDateFormat("yyyy-MM").format(result.getDate(Table_artists_month_score.COL_SCORE_DATE));
-				Table_artists_month_score artistsMonScore = new Table_artists_month_score(result.getInt("ams_id"), result.getDouble(Table_artists_month_score.COL_SCORE), date, 0, 0);
+				Table_artists_month_score artistsMonScore = new Table_artists_month_score(
+						result.getInt("ams_id"),
+						result.getDouble(Table_artists_month_score.COL_SCORE),
+						date,
+						type,
+						Integer.parseInt(id));
 
 				name = result.getString(Table_artists.COL_NAME);
 				if (type == Table_artists_month_score.TYPE_HEAT) {

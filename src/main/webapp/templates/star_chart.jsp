@@ -147,7 +147,7 @@
 			var dateTime = row.dateTime;
 			var heatId = row.heatId;
 
-			location.href = "./StarNewsSummaryServlet?artist_id=" + artist_id + "&date_time=" + dateTime + "&heat_id=" + heatId;
+			location.href = "./star_news_summary?artist_id=" + artist_id + "&date_time=" + dateTime + "&heat_id=" + heatId + "&type=news";
 		});
 		//正面評語折線圖
 		new Morris.Line({
@@ -159,7 +159,11 @@
 			lineColors: ['#EAC100'],
 		    pointFillColors: ['#EAC100']
 		}).on('click', function(index, row) {
-			
+			var artist_id = $("#div_star_data").data("id");
+			var dateTime = row.dateTime;
+			var heatId = row.heatId;
+
+			location.href = "./star_news_summary?artist_id=" + artist_id + "&date_time=" + dateTime + "&heat_id=" + heatId + "&type=positive";
 		});
 		//負面評語折線圖
 		new Morris.Line({
@@ -171,7 +175,11 @@
 			lineColors: ['#6C6C6C'],
 		    pointFillColors: ['#6C6C6C']
 		}).on('click', function(index, row) {
-	
+			var artist_id = $("#div_star_data").data("id");
+			var dateTime = row.dateTime;
+			var heatId = row.heatId;
+
+			location.href = "./star_news_summary?artist_id=" + artist_id + "&date_time=" + dateTime + "&heat_id=" + heatId + "&type=negative";
 		});
 	</script>
 </body>

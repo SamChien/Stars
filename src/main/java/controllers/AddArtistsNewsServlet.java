@@ -91,37 +91,20 @@ public class AddArtistsNewsServlet extends HttpServlet {
 					Table_artists_news_comments.COL_NEGATIVE_SCORE,
 					Table_artists_news_comments.COL_TYPE,
 					Table_artists_news_comments.COL_ARTIST_ID};
-			if (id.substring(id.length() - 3, id.length()).equals("N01")) {
-				values = new Object[] {
-						id,
-						result.getString(Table_ts_page_content.COL_S_NAME),
-						result.getString(Table_ts_page_content.COL_S_AREA_NAME),
-						result.getString(Table_ts_page_content.COL_TITLE),
-						result.getString(Table_ts_page_content.COL_AUTHOR),
-						result.getString(Table_ts_page_content.COL_PAGE_URL),
-						result.getString(Table_ts_page_content.COL_POST_TIME),
-						result.getString(Table_ts_page_content.COL_CONTENT),
-						result.getInt(Table_ts_page_content.COL_COMMENT_COUNT),
-						result.getDouble(Table_ts_page_content.COL_POSITIVE_SCORE),
-						result.getDouble(Table_ts_page_content.COL_NEGATIVE_SCORE),
-						Table_artists_news_comments.TYPE_NEWS,
-						artistId};
-			} else {
-				values = new Object[] {
-						id,
-						result.getString(Table_ts_page_content.COL_S_NAME),
-						result.getString(Table_ts_page_content.COL_S_AREA_NAME),
-						result.getString(Table_ts_page_content.COL_TITLE),
-						result.getString(Table_ts_page_content.COL_AUTHOR),
-						result.getString(Table_ts_page_content.COL_PAGE_URL),
-						result.getString(Table_ts_page_content.COL_POST_TIME),
-						result.getString(Table_ts_page_content.COL_CONTENT),
-						result.getInt(Table_ts_page_content.COL_COMMENT_COUNT),
-						result.getDouble(Table_ts_page_content.COL_POSITIVE_SCORE),
-						result.getDouble(Table_ts_page_content.COL_NEGATIVE_SCORE),
-						Table_artists_news_comments.TYPE_COMMENTS,
-						artistId};
-			}
+			values = new Object[] {
+					id,
+					result.getString(Table_ts_page_content.COL_S_NAME),
+					result.getString(Table_ts_page_content.COL_S_AREA_NAME),
+					result.getString(Table_ts_page_content.COL_TITLE),
+					result.getString(Table_ts_page_content.COL_AUTHOR),
+					result.getString(Table_ts_page_content.COL_PAGE_URL),
+					result.getString(Table_ts_page_content.COL_POST_TIME),
+					result.getString(Table_ts_page_content.COL_CONTENT),
+					result.getInt(Table_ts_page_content.COL_COMMENT_COUNT),
+					result.getDouble(Table_ts_page_content.COL_POSITIVE_SCORE),
+					result.getDouble(Table_ts_page_content.COL_NEGATIVE_SCORE),
+					(id.substring(id.length() - 3, id.length()).equals("N01"))? Table_artists_news_comments.TYPE_NEWS:Table_artists_news_comments.TYPE_COMMENTS,
+					artistId};
 			mysqlDb.insert(table, cols, values, true);
 		}
 	}
@@ -209,7 +192,7 @@ public class AddArtistsNewsServlet extends HttpServlet {
 			innerResult.next();
 			heatId = innerResult.getString(Table_artists_month_score.COL_ID);
 
-			cols = new String[] {Table_artists_news_comments.COL_CONTENT};
+			cols = new String[] {Table_artists_news_comments.COL_TITLE, Table_artists_news_comments.COL_CONTENT};
 			table = Table_artists_news_comments.TABLE_NAME;
 			where = Table_artists_news_comments.COL_ARTIST_ID + " = " + artistId +
 					" AND YEAR(" + Table_artists_news_comments.COL_POST_TIME + ") = " + year +
@@ -218,14 +201,14 @@ public class AddArtistsNewsServlet extends HttpServlet {
 			orderBy = Table_artists_news_comments.COL_POST_TIME;
 			innerResult = mysqlDb.select(cols, table, false, where, orderBy);
 			while (innerResult.next()) {
-				newsContentList.add(innerResult.getString(Table_artists_news_comments.COL_CONTENT));
+				newsContentList.add(innerResult.getString(Table_artists_news_comments.COL_TITLE) + innerResult.getString(Table_artists_news_comments.COL_CONTENT));
 			}
 			keywordList = Keywords.genKeywords(newsContentList);
 
 			for (Table_keywords keyword : keywordList) {
 				table = Table_keywords.TABLE_NAME;
-				cols = new String[] { Table_keywords.COL_WORD, Table_keywords.COL_TF_IDF, Table_keywords.COL_HEAT_ID };
-				values = new Object[] { keyword.getWord(), keyword.getTfIdf(), heatId };
+				cols = new String[] {Table_keywords.COL_WORD, Table_keywords.COL_TF_IDF, Table_keywords.COL_HEAT_ID};
+				values = new Object[] {keyword.getWord(), keyword.getTfIdf(), heatId};
 				mysqlDb.insert(table, cols, values, true);
 			}
 		}
