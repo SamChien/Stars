@@ -26,10 +26,9 @@
 
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#about">About</a></li>
-					<li><a href="#contact">Contact</a></li>
-					<li><a href="#ccc">Contact</a></li>
+					<li class="active"><a href="">首頁大廳</a></li>
+					<li><a href="">開發團隊</a></li>
+					<li><a href="./add_artists_news">後台管理</a></li>					
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
@@ -61,7 +60,7 @@
 				</ul>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<h1 class="page-header">明星紅不紅</h1>
+				<h1 class="page-header"><strong>明星紅不紅</strong></h1>
 
 				<h2 class="sub-header">熱門明星列表</h2>
 				<div class="table-responsive">
@@ -76,6 +75,7 @@
 						<tbody>
 							<c:forEach var="artist" items="${requestScope.artistList}" varStatus="status">
 								<tr>
+									
 									<td>${status.count}</td>
 									<td>${artist.getName()}</td>
 									<td><a href="./star_chart?id=${artist.getId()}">查看</a></td>

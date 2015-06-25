@@ -45,7 +45,7 @@ public class Summary {
 	public String getSummary(String DocContent, List<String> keywords, int SentenceLength) {
 		String summary = null;
 		
-		DocContent = DocContent.replaceAll("[a-zA-Z]","");
+		DocContent = DocContent.replaceAll("[a-zA-Z<>]","");
 		
 		DocContent = DocContent.replaceAll("。", ":");
 		DocContent = DocContent.replaceAll("，", ":");

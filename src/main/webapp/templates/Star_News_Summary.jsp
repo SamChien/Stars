@@ -22,14 +22,15 @@
           </button>
           <a class="navbar-brand" href="#">知識工程期末專題</a>
         </div>
-        
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="./index">首頁</a></li>
-            <li><a href="#about">開發團隊</a></li>
-            <li><a href="#contact">後台管理</a></li>      
-          </ul>
-        </div><!--/.nav-collapse -->
+
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="./index">首頁大廳</a></li>
+					<li><a href="">開發團隊</a></li>
+					<li><a href="./add_artists_news">後台管理</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
         
       </div>
     </nav>
@@ -59,8 +60,8 @@
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<c:catch var="dateTime" >
-				<h1 class="page-header">時間點:
-					${dateTime}
+				<h1 class="page-header"><strong>時間點:
+					${dateTime}</strong>
 				</h1>
 				</c:catch>
 				

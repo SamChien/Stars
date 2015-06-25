@@ -6,6 +6,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>建立與明星相關的新聞</title>
 <link href="./css/bootstrap.min.css" rel="stylesheet">
+<style>
+body{
+
+background:#444444;
+}
+</style>
 </head>
 <body>
 	<div class="row">
@@ -32,6 +38,10 @@
 			<div class="alert alert-success" role="alert">建立完成</div>
 		</div>
 	</div>
+		<img src="images/b1.jpg" class="img-circle" width="400" height="500" />
+		<img src="images/b2.jpg" class="img-circle" width="400" height="500" />
+		<img src="images/b3.jpg" class="img-circle" width="300" height="500"/>
+		<img src="images/b4.JPG" class="img-circle" width="400" height="500"/>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="./js/bootstrap.js"></script>

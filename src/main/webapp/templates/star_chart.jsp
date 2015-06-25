@@ -27,9 +27,9 @@
 
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="./index">首頁</a></li>
-					<li><a href="#about">開發團隊</a></li>
-					<li><a href="#contact">後台管理</a></li>
+					<li><a href="./index">首頁大廳</a></li>
+					<li><a href="">開發團隊</a></li>
+					<li><a href="./add_artists_news">後台管理</a></li>					
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
@@ -61,7 +61,7 @@
 				</ul>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<h1 class="page-header">明星紅不紅</h1>
+				<h1 class="page-header"><strong>明星紅不紅</strong></h1>
 					
 				<c:catch var="artist_Name" >
 						<h2 class="sub-header">藝人:${name}</h2>
