@@ -177,10 +177,10 @@ public class AddArtistsNewsServlet extends HttpServlet {
 					Table_artists_month_score.COL_SCORE_DATE,
 					Table_artists_month_score.COL_TYPE,
 					Table_artists_month_score.COL_ARTIST_ID};
-			values = new Object[] {(commentNewsCount == 0)? 0:totalPosScore / commentNewsCount, date, Table_artists_month_score.TYPE_POSITIVE, artistId};
+			values = new Object[] {(commentNewsCount < 5)? 0:totalPosScore / commentNewsCount, date, Table_artists_month_score.TYPE_POSITIVE, artistId};
 			mysqlDb.insert(table, cols, values, true);
 
-			values = new Object[] {(commentNewsCount == 0)? 0:totalNegScore / commentNewsCount, date, Table_artists_month_score.TYPE_NEGATIVE, artistId};
+			values = new Object[] {(commentNewsCount < 5)? 0:totalNegScore / commentNewsCount, date, Table_artists_month_score.TYPE_NEGATIVE, artistId};
 			mysqlDb.insert(table, cols, values, true);
 
 			cols = new String[] {Table_artists_month_score.COL_ID};
